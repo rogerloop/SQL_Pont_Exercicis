@@ -1,4 +1,6 @@
-/* 1) Mostra la quantitat de pacients que hi ha a la taula "pacientes".
+/*  Aquest exercici es fa sobre la DB hospitales
+
+1) Mostra la quantitat de pacients que hi ha a la taula "pacientes".
 
 2) Mostra la quantitat de pacients que té cada "hospital_id"
  de la taula "pacientes".
@@ -19,3 +21,4 @@ de la taula "pacientes".
 
 9) Mostra la quantitat d'hospitals per "especialidad" i per "fija". És a dir, 
 quants hospitals tenen una especialitat en funció de si és fixa o no. */
+
