@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+*.bak
+~$*
+.vscode/launch.json
+.idea/
+*.swp
+*.swo

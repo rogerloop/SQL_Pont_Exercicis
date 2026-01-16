@@ -1,0 +1,28 @@
+{
+  "sql.linting.enabled": true,
+  "sql.formatting.keyword": "uppercase",
+  "[sql]": {
+    "editor.defaultFormatter": "dineybomfim.flyway",
+    "editor.formatOnSave": true
+  },
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default",
+        "enableSsl": "Disabled"
+      },
+      "ssh": "Disabled",
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "MySQL IT Academy",
+      "username": "root",
+      "database": "hospitales"
+    }
+  ]
+}
