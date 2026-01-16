@@ -2,7 +2,7 @@
   "sql.linting.enabled": true,
   "sql.formatting.keyword": "uppercase",
   "[sql]": {
-    "editor.defaultFormatter": "dineybomfim.flyway",
+    "editor.defaultFormatter": "mtxr.sqltools",
     "editor.formatOnSave": true
   },
   "files.exclude": {
