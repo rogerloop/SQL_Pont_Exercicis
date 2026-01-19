@@ -3,7 +3,7 @@
   "sql.formatting.keyword": "uppercase",
   "[sql]": {
     "editor.defaultFormatter": "mtxr.sqltools",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": false
   },
   "files.exclude": {
     "**/.DS_Store": true,
