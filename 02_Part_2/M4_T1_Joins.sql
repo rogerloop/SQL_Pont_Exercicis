@@ -52,4 +52,22 @@ ORDER BY num_retrasos_devolucion DESC, media_dias_retrasados DESC;
 -- 4.Mostra la quantitat d'usuaris que no han realitzat cap préstec.
 ;
 
+SELECT COUNT (usuarios.usuario_id) AS usuarios_sin_prestamo
+FROM usuarios
+LEFT JOIN prestamos ON usuarios.usuario_id = prestamos.usuario_id
+WHERE prestamos.prestamo_id is NULL
+;
 
+-- 5.Mostra el nom dels 3 usuaris que han fet més préstecs.
+;
+
+SELECT usuarios.usuario_id,
+    usuarios.nombre,
+    usuarios.apellido,
+    COUNT (prestamos.prestamo_id) AS num_prestamos
+FROM usuarios
+INNER JOIN prestamos ON usuarios.usuario_id = prestamos.usuario_id
+GROUP BY usuarios.usuario_id
+ORDER BY num_prestamos DESC, usuarios.usuario_id
+LIMIT 3
+;
