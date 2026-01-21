@@ -8,4 +8,19 @@ TREBALLEM SOBRE LA Database Biblioteca
 3) Mostra els llibres que tenen més còpies que la mitjana del nombre de còpies dels llibres de la seva categoria.
 
 4) Quin és el nom del llibre i del seu autor, del llibre que té un import més gran en multes (comptant la suma de totes les multes de cada llibre)?
- */
+ */;
+
+ -- 1)Quin és el nom de l'empleat (o dels empleats) i la seva posició, amb el mínim any de contractació?
+ ;
+VSC
+ SELECT 
+    empleados.nombre,
+    empleados.apellido,
+    empleados.posicion
+ FROM 
+    empleados
+ WHERE 
+    empleados.año_contratacion = (SELECT MIN(empleados.año_contratacion)
+    FROM empleados);
+
+    
