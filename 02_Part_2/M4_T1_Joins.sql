@@ -103,3 +103,18 @@ GROUP BY autores.nombre
 ORDER BY num_prestamos DESC
 LIMIT 1
 ;
+
+-- 8.Quina és la categoria de llibres que més demanen en préstec les persones que tenen targeta de fidelitat?
+;
+
+SELECT categorias.nombre,
+    COUNT (prestamos.prestamo_id) num_prestamos
+FROM libros
+JOIN categorias ON libros.categoria_id = categorias.categoria_id
+JOIN prestamos ON libros.libro_id = prestamos.libro_id
+JOIN usuarios ON prestamos.usuario_id = usuarios.usuario_id
+WHERE usuarios.tarjeta_fidelidad = 'Si'
+GROUP BY categorias.nombre
+ORDER BY num_prestamos DESC
+LIMIT 1
+;
