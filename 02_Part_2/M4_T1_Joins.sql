@@ -71,3 +71,35 @@ GROUP BY usuarios.usuario_id
 ORDER BY num_prestamos DESC, usuarios.usuario_id
 LIMIT 3
 ;
+
+-- 6.Mostra el nom i l'ID dels usuaris estrangers i que han hagut de pagar una multa 
+--per retard en la devolució del préstec superior a 10 euros.
+;
+
+SELECT DISTINCT prestamos.usuario_id,
+                usuarios.nombre,
+                usuarios.apellido
+FROM prestamos
+JOIN usuarios ON prestamos.usuario_id = usuarios.usuario_id
+JOIN multas ON prestamos.prestamo_id = multas.prestamo_id
+WHERE multas.importe > 10.00 AND usuarios.nacionalidad LIKE 'extranjera'
+ORDER BY prestamos.usuario_id
+;
+
+-- 7.Mostra l'autor nascut després de 1980 que ha generat més préstecs en usuaris espanyols. 
+-- A més, només s'han de comptabilitzar els préstecs finalitzats (ok o amb retard).
+;
+
+SELECT autores.nombre,
+    COUNT (prestamos.prestamo_id) AS num_prestamos
+FROM prestamos
+JOIN libros ON prestamos.libro_id = libros.libro_id
+JOIN autores ON libros.autor_id = autores.autor_id
+JOIN usuarios ON prestamos.usuario_id = usuarios.usuario_id
+WHERE autores.año_nacimiento > 1980 
+    AND prestamos.estado_prestamo IN ('finalizado ok', 'finalizado con retraso')
+    AND usuarios.nacionalidad = 'española'
+GROUP BY autores.nombre
+ORDER BY num_prestamos DESC
+LIMIT 1
+;
