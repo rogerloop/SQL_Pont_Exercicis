@@ -22,7 +22,7 @@
       "driver": "MySQL",
       "name": "MySQL IT Academy",
       "username": "root",
-      "database": "BBDD_Union"
+      "database": "biblioteca"
     }
   ]
 }
