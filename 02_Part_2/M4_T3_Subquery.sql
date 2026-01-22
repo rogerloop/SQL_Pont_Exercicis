@@ -29,3 +29,14 @@ VSC
 -- 2) Mostra el nom de la categoria i el nom del llibre (o llibres), dels llibres amb l'any de publicació més recent de cada categoria.
 ;
 
+SELECT categorias.nombre, libros.titulo, libros.año_publicacion
+FROM libros
+JOIN categorias ON libros.categoria_id = categorias.categoria_id
+JOIN (SELECT libros.categoria_id, MAX (libros.año_publicacion) AS max_año_pub
+      FROM libros
+      GROUP BY libros.categoria_id) AS max_año_cat
+ON libros.categoria_id = max_año_cat.categoria_id
+WHERE libros.año_publicacion = max_año_cat.max_año_pub
+ORDER BY categorias.nombre
+;
+
