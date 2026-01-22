@@ -1,6 +1,7 @@
 {
   "sql.linting.enabled": true,
   "sql.formatting.keyword": "uppercase",
+  "sqltools.format.tabSize": 4
   "[sql]": {
     "editor.defaultFormatter": "mtxr.sqltools",
     "editor.formatOnSave": false

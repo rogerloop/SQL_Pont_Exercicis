@@ -20,9 +20,10 @@ VSC
  FROM 
     empleados
  WHERE 
-    empleados.año_contratacion = 
-        (SELECT MIN(empleados.año_contratacion)
-        FROM empleados)
+   empleados.año_contratacion = (
+      SELECT MIN(empleados.año_contratacion)
+      FROM empleados
+   )   
 ;
 
 -- 2) Mostra el nom de la categoria i el nom del llibre (o llibres), dels llibres amb l'any de publicació més recent de cada categoria.
