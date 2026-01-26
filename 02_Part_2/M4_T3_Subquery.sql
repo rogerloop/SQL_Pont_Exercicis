@@ -121,4 +121,5 @@ JOIN autores ON libros.autor_id = autores.autor_id
 JOIN multas_libro ON libros.libro_id = multas_libro.libro_id
 JOIN max_multas_libro ON multas_libro.sum_multas = max_multas_libro.max_multas
 ORDER BY multas_libro.sum_multas DESC
+
 ;
