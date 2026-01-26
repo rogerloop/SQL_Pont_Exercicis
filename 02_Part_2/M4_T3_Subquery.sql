@@ -65,6 +65,7 @@ ORDER BY    nombre_categoria,
 
 -- 4) Quin és el nom del llibre i del seu autor, del llibre que té un import més gran en multes (comptant la suma de totes les multes de cada llibre)?
 ;
+-- SOLUCION CON SUBQUERY Y JOIN SIN "WITH"
 
 SELECT  libros.titulo,
         autores.nombre,
@@ -91,6 +92,33 @@ JOIN (
         ) AS multas_libro2
     ) AS max_multas_libro
 ON multas_libro.sum_multas = max_multas_libro.max_multas
-
 ;
 
+-- SOLUCION CON CTE - Common Table Expression (WITH)
+
+-- 4) Quin és el nom del llibre i del seu autor, del llibre que té un import més gran en multes (comptant la suma de totes les multes de cada llibre)?
+
+WITH multas_libro AS (
+    SELECT  prestamos.libro_id,
+            SUM (multas.importe) AS sum_multas
+    FROM prestamos
+    JOIN multas ON prestamos.prestamo_id = multas.prestamo_id
+    GROUP BY prestamos.libro_id
+),
+
+max_multas_libro AS (
+    SELECT MAX (multas_libro.sum_multas) AS max_multas
+    FROM multas_libro
+)
+
+SELECT  libros.titulo,
+        autores.nombre,
+        multas_libro.sum_multas
+        
+FROM libros
+
+JOIN autores ON libros.autor_id = autores.autor_id
+JOIN multas_libro ON libros.libro_id = multas_libro.libro_id
+JOIN max_multas_libro ON multas_libro.sum_multas = max_multas_libro.max_multas
+ORDER BY multas_libro.sum_multas DESC
+;
