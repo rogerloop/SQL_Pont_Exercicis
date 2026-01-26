@@ -72,6 +72,7 @@ SELECT  libros.titulo,
         
 FROM libros
 JOIN autores ON libros.autor_id = autores.autor_id
+
 JOIN (
     SELECT prestamos.libro_id, SUM (multas.importe) AS sum_multas
     FROM prestamos
@@ -80,9 +81,16 @@ JOIN (
     ) AS multas_libro
 ON libros.libro_id = multas_libro.libro_id
 
+JOIN (
+    SELECT MAX (multas_libro2.sum_multas) AS max_multas
+    FROM (
+        SELECT prestamos.libro_id, SUM (multas.importe) AS sum_multas
+        FROM prestamos
+        JOIN multas ON prestamos.prestamo_id = multas.prestamo_id
+        GROUP BY prestamos.libro_id
+        ) AS multas_libro2
+    ) AS max_multas_libro
+ON multas_libro.sum_multas = max_multas_libro.max_multas
 
-
-ORDER BY multas_libro.sum_multas DESC
-LIMIT 1
 ;
 
