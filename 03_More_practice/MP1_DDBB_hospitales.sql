@@ -33,3 +33,32 @@ FROM hospitales
 JOIN pacientes ON hospitales.hospital_id = pacientes.hospital_id
 WHERE hospitales.localidad = 'Toledo' AND pacientes.nacionalidad = 'Extranjera'
 ;
+
+-- » 2. Mostra el nom dels hospitals i la quantitat d'especialitats que hi ha als hospitals de la consulta anterior.
+;
+
+SELECT  hospitales.nombre AS hospital,
+        COUNT (especialidades.especialidad) AS num_especialidades
+FROM hospitales
+JOIN especialidades ON hospitales.hospital_id = especialidades.hospital_id
+WHERE hospitales.localidad = 'Toledo'
+GROUP BY hospitales.nombre
+;
+
+-- » 3. Mostra el nom de l’hospital i les especialitats que té l’hospital amb identificador 105.
+;
+
+SELECT  hospitales.nombre,
+        especialidades.especialidad
+FROM hospitales
+JOIN especialidades ON hospitales.hospital_id = especialidades.hospital_id
+WHERE hospitales.hospital_id = 105
+;
+
+-- » 4. Digues quants hospitals tenen dades a la taula "hospitales", però no tenen dades a la taula de "pacientes".
+;
+
+SELECT *
+FROM hospitales
+LEFT JOIN pacientes ON hospitales.hospital_id = pacientes.hospital_id
+;
