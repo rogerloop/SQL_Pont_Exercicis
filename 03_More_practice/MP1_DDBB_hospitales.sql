@@ -58,7 +58,9 @@ WHERE hospitales.hospital_id = 105
 -- » 4. Digues quants hospitals tenen dades a la taula "hospitales", però no tenen dades a la taula de "pacientes".
 ;
 
-SELECT *
+SELECT COUNT(DISTINCT hospitales.hospital_id) AS num_hospitals_sin_pacientes
 FROM hospitales
 LEFT JOIN pacientes ON hospitales.hospital_id = pacientes.hospital_id
+WHERE pacientes.hospital_id IS NULL
 ;
+
