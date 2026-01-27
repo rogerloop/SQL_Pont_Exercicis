@@ -65,7 +65,7 @@ WHERE pacientes.hospital_id IS NULL
 ;
 
 -- » 5. Mostra el nom de l'hospital que té menys especialitats fixes.
-
+;
 -- Solucion con JOIN NO Dinamica
 
 SELECT  hospitales.hospital_id,
@@ -132,3 +132,37 @@ FROM hospitales
 JOIN fijas_hospital ON hospitales.hospital_id = fijas_hospital.hospital_id
 JOIN min_fijas ON fijas_hospital.num_fijas = min_fijas.min_num
 ;
+
+
+-- » 6. Mostra el nom i el nombre total de visites de l'hospital amb identificador 45.
+;
+
+SELECT  hospitales.nombre,
+        SUM (pacientes.numero_visitas) AS total_visitas
+FROM pacientes
+JOIN hospitales ON pacientes.hospital_id = hospitales.hospital_id
+WHERE pacientes.hospital_id = 45
+GROUP BY hospitales.nombre
+;
+
+-- » 7. Mostra el nom de l'hospital, el nom dels seus pacients estrangers i el nombre de visites, 
+-- així com les especialitats que NO són fixes. Totes aquestes dades de l'hospital amb identificador 45.
+;
+
+SELECT  h.hospital_id,
+        h.nombre,
+        p.nombre,
+        p.numero_visitas,
+        e.especialidad
+FROM hospitales h
+JOIN pacientes p ON h.hospital_id = p.hospital_id
+JOIN especialidades e ON h.hospital_id = e.hospital_id
+WHERE h.hospital_id = 45 AND p.nacionalidad ='Extranjera' AND e.fija = 'N'
+;
+
+--» 8. Suma el "numero_visitas" de la consulta anterior (a mà) i compara-la amb el "numero_visitas" de la consulta núm. 6. Són iguals? Què està passant? 
+;
+
+-- No son iguals, a la Consulta 6 sumem totes les visites que ha tingut l'hospital id 45 per part dels pacients de la taula Pacientes
+-- A la consulta 7 només tenim en compte les visites a especialidad NO fija del hospital id 45 per part de clients estrangers 
+-- Pero degut a que amb les taules que tenim no podem saber les especialitats per pacient, En la consulta 7 es dupliquen resultats per lo que no es correcte.
