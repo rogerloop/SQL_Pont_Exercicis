@@ -64,3 +64,71 @@ LEFT JOIN pacientes ON hospitales.hospital_id = pacientes.hospital_id
 WHERE pacientes.hospital_id IS NULL
 ;
 
+-- » 5. Mostra el nom de l'hospital que té menys especialitats fixes.
+
+-- Solucion con JOIN NO Dinamica
+
+SELECT  hospitales.hospital_id,
+        hospitales.nombre,
+        especialidades.hospital_id,
+        COUNT (especialidades.fija) AS num_especialidades_fijas
+FROM hospitales
+JOIN especialidades ON hospitales.hospital_id = especialidades.hospital_id
+WHERE especialidades.fija = 'S'
+GROUP BY hospitales.hospital_id
+ORDER BY num_especialidades_fijas
+LIMIT 3
+;
+
+-- Solucion con SUBQUERY - Dinamica
+
+SELECT hospitales.nombre, 
+         fijas_hospital.num_fijas
+        
+FROM hospitales
+JOIN (SELECT especialidades.hospital_id, 
+        COUNT (*) AS num_fijas
+        FROM especialidades
+        WHERE especialidades.fija = 'S'
+        GROUP BY especialidades.hospital_id
+        ) AS fijas_hospital
+ON hospitales.hospital_id = fijas_hospital.hospital_id
+WHERE fijas_hospital.num_fijas = (
+    SELECT MIN (num_fijas)
+    FROM (
+        SELECT especialidades.hospital_id, 
+        COUNT (*) AS num_fijas
+        FROM especialidades
+        WHERE especialidades.fija = 'S'
+        GROUP BY especialidades.hospital_id
+        ) AS min_fijas
+)
+;
+
+-- Solucion con Subquery CTE "WITH"
+
+WITH fijas_hospital AS (  
+    SELECT  especialidades.hospital_id, 
+            COUNT (*) AS num_fijas
+    FROM especialidades
+    WHERE especialidades.fija = 'S'
+    GROUP BY especialidades.hospital_id
+),
+
+min_fijas AS (
+    SELECT MIN (fijas_hospital.num_fijas) AS min_num
+    FROM (
+        SELECT  especialidades.hospital_id, 
+                COUNT (*) AS num_fijas
+        FROM especialidades
+        WHERE especialidades.fija = 'S'
+        GROUP BY especialidades.hospital_id
+        ) AS fijas_hospital
+)
+
+SELECT  hospitales.nombre,
+        fijas_hospital.num_fijas
+FROM hospitales
+JOIN fijas_hospital ON hospitales.hospital_id = fijas_hospital.hospital_id
+JOIN min_fijas ON fijas_hospital.num_fijas = min_fijas.min_num
+;
