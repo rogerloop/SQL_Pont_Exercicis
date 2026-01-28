@@ -48,3 +48,22 @@ WHERE presupuesto_anual_millones = (    SELECT MAX (presupuesto_anual_millones)
                                         WHERE h1.comunidad_autonoma = h2.comunidad_autonoma)
 ORDER BY comunidad_autonoma
 ;
+
+-- » 2. Mostra el nom de l'hospital i el nom del pacient que te menys edat de cada hospital.
+;
+
+SELECT  h.hospital_id,
+        h.nombre,
+        p.nombre,
+        p.edad
+FROM hospitales h
+JOIN pacientes p ON h.hospital_id = p.hospital_id
+WHERE (h.hospital_id, p.edad) IN (
+    SELECT p.hospital_id, MIN (p.edad) AS min_edad
+    FROM pacientes p
+    GROUP BY p.hospital_id
+    ORDER BY p.hospital_id
+) 
+ORDER BY h.hospital_id
+;
+
