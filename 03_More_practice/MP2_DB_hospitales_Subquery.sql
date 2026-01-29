@@ -67,3 +67,20 @@ WHERE (h.hospital_id, p.edad) IN (
 ORDER BY h.hospital_id
 ;
 
+-- » 3. Mostra els hospitals que estàn per sobre de la mitja de "indice_satisfaccion" de cada comunidad autònoma.
+;
+
+SELECT  hospitales.nombre,
+        hospitales.indice_satisfaccion AS is_hospital,
+        med_satisfaccion_ca.media_satisfaccion AS is_media_ca
+FROM hospitales
+JOIN (
+SELECT h.comunidad_autonoma, AVG (h.indice_satisfaccion) AS media_satisfaccion
+FROM hospitales h
+GROUP BY h.comunidad_autonoma
+) AS med_satisfaccion_ca
+ON hospitales.comunidad_autonoma = med_satisfaccion_ca.comunidad_autonoma
+WHERE hospitales.indice_satisfaccion > med_satisfaccion_ca.media_satisfaccion
+ORDER BY hospitales.indice_satisfaccion
+;
+
