@@ -39,3 +39,53 @@ LIMIT 5
 ) AS total_data
 ON DATE (t.timestamp) = total_data.data_venda
 ;
+
+/* 
+Exercici 2
+
+Quina és la mitjana de vendes per país? Presenta els resultats ordenats de major a menor mitjà.
+*/;
+
+SELECT  c.country,
+        AVG (t.amount) AS mitjana_vendes
+FROM transaction t
+JOIN company c ON t.company_id = c.id
+GROUP BY c.country
+ORDER BY mitjana_vendes DESC
+;
+
+/* 
+Exercici 3
+
+En la teva empresa, es planteja un nou projecte per a llançar algunes campanyes publicitàries 
+per a fer competència a la companyia "Non Institute". 
+Per a això, et demanen la llista de totes les transaccions realitzades 
+per empreses que estan situades en el mateix país que aquesta companyia.
+
+Mostra el llistat aplicant JOIN i subconsultes.
+Mostra el llistat aplicant solament subconsultes.
+*/;
+
+
+SELECT *
+FROM transaction t
+JOIN company c ON t.company_id = c.id
+WHERE c.country IN (
+    SELECT c.country
+    FROM company c
+    WHERE c.company_name = 'Non Institute'
+)
+;
+
+SELECT *
+FROM transaction t
+WHERE t.company_id IN (
+    SELECT c.id
+    FROM company c
+    WHERE c.country IN (
+        SELECT c.country
+        FROM company c
+        WHERE c.company_name = 'Non Institute'
+)
+)
+;
