@@ -6,14 +6,25 @@ entre 100 i 200 euros i en alguna d'aquestes dates: 29 d'abril del 2021, 20 de j
 Ordena els resultats de major a menor quantitat.
 */;
 
+SELECT  c.company_name,
+        c.phone,
+        c.country,
+        DATE (t.timestamp) AS data_t,
+        t.amount
+FROM transaction t
+JOIN company c ON t.company_id = c.id
+WHERE (t.amount BETWEEN 100 AND 200)
+AND DATE (t.timestamp) IN ('2021-04 -29' , '2021-07-20' , '2022-03-13')
+ORDER BY t.amount DESC
+
+;
 
 
 
 
 
 
-
-
+-- AND DATE (t.timestamp) = 2021-04-29 OR 2021-07-20 OR 2022-03-13
 
 
 
