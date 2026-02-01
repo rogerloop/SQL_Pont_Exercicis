@@ -16,18 +16,7 @@ JOIN company c ON t.company_id = c.id
 WHERE (t.amount BETWEEN 100 AND 200)
 AND DATE (t.timestamp) IN ('2021-04 -29' , '2021-07-20' , '2022-03-13')
 ORDER BY t.amount DESC
-
 ;
-
-
-
-
-
-
--- AND DATE (t.timestamp) = 2021-04-29 OR 2021-07-20 OR 2022-03-13
-
-
-
 
 
 /* 
@@ -38,3 +27,21 @@ per la qual cosa et demanen la informació sobre la quantitat de transaccions qu
 però el departament de recursos humans és exigent i 
 vol un llistat de les empreses on especifiquis si tenen més de 4 transaccions o menys.
 */;
+
+SELECT  c.company_name,
+        qo.operacions,
+CASE 
+    WHEN qo.operacions > 4 THEN 'Te mes de 4 operacions'
+    ELSE 'Te menys de 4 operacions'
+END AS quantitat_transaccions
+FROM company c
+JOIN (
+    SELECT  t.company_id,
+            COUNT (t.id) AS operacions
+    FROM transaction t
+    WHERE declined = 0
+    GROUP BY t.company_id
+) AS qo
+ON c.id = qo.company_id
+ORDER BY quantitat_transaccions DESC, c.company_name
+;
