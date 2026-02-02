@@ -10,38 +10,30 @@ Fundamentos de SQL: SELECT, WHERE, ORDER BY, LIMIT
 - Filtros básicos
 - Ordenamiento de resultados
 
-### 02_joins/
+### 02_Part_2/
+
+### M4_T1_JOINS
 Combinación de tablas: INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN
 - Relaciones entre tablas
 - Consultas multi-tabla
 - Tipos de joins
 
-### 03_subqueries/
+### M4_T2_Union
+
+### M4_T3_subqueries/
 Subconsultas y consultas anidadas
 - Subconsultas escalares
 - Subconsultas correlacionadas
 - IN, EXISTS, ALL, ANY
 
-### 04_aggregations/
-Funciones de agregación y GROUP BY
-- COUNT, SUM, AVG, MIN, MAX
-- GROUP BY
-- HAVING
-- Window functions
+### 03_More_practice
 
-### 05_advanced/
-Temas avanzados
-- CTEs (Common Table Expressions)
-- Vistas
-- Índices y optimización
-- Transacciones
 
-### 06_database_design/
-Diseño de bases de datos
-- Modelo relacional
-- Normalización
-- Integridad referencial
-- Diseño de esquemas
+### S2-01_Nocions_basiques_SQL
+Exercicis SQL dels temes estudiats en el Pont 
+- 01_nivell_01
+- 02_nivell_02
+- 03_nivell_03
 
 ### resources/
 Archivos y recursos adicionales
